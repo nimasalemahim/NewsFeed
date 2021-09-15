@@ -8,3 +8,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'username', 'email', 'token'
         )
+
+
+class PostUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'email',
+        )

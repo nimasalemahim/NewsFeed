@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
+from post.models import Post
 
 
 class Subscription(models.Model):
@@ -16,4 +18,12 @@ class User(AbstractUser):
     def follow(self, user):
         self.following.add(user)
         self.save()
-# Create your models here.
+
+    def get_unseen_posts(self):
+        if self.latest_post_seen:
+            return Post.objects.filter(owner__in=self.following.all(), publish_datetime__gte=self.latest_post_seen)
+        return Post.objects.filter(owner__in=self.following.all())
+
+    def update_latest_post_seen(self):
+        self.latest_post_seen = timezone.now()
+        self.save()

@@ -13,3 +13,5 @@ class SubscribeViewSet(APIView):
         user_to_follow = get_object_or_404(User, email=email)
         this_user.follow(user_to_follow)
         return Response(data={'status': 'OK'})
+
+

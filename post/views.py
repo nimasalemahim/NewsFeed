@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404
 from .models import Post
 from user.models import User
 from rest_framework.response import Response
+from rest_framework.generics import ListAPIView
+from .serializers import PostSerializer
 
 
 class PublishPost(APIView):
@@ -13,4 +15,14 @@ class PublishPost(APIView):
         user = get_object_or_404(User, token=token)
         Post.objects.create(text=text, owner=user)
         return Response(data={"status": "OK"})
-# Create your views here.
+
+
+class GetPosts(ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        token = self.request.query_params.get('token', '')
+        user = get_object_or_404(User, token=token)
+        posts = user.get_unseen_posts()
+        user.update_latest_post_seen()
+        return posts
