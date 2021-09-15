@@ -11,6 +11,7 @@ class User(AbstractUser):
     token = models.CharField(max_length=10, blank=True, null=True)
     following = models.ManyToManyField('self', related_name='followers', symmetrical=False, blank=True,
                                        through=Subscription)
+    latest_post_seen = models.DateTimeField(null=True, blank=True)
 
     def follow(self, user):
         self.following.add(user)

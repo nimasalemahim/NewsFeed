@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path
 from .views import SignupView
 from user.views import SubscribeViewSet
+from post.views import PublishPost
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/signup/', SignupView.as_view(), name='signup'),
-    path('api/subscribe/', SubscribeViewSet.as_view(), name='subscribe')
+    path('api/subscribe/', SubscribeViewSet.as_view(), name='subscribe'),
+    path('api/publish/', PublishPost.as_view(), name='publish')
 
 ]
