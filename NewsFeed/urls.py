@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import SignupView
+from user.views import SubscribeViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/signup/', SignupView.as_view(), name='signup')
+    path('api/signup/', SignupView.as_view(), name='signup'),
+    path('api/subscribe/', SubscribeViewSet.as_view(), name='subscribe')
+
 ]
